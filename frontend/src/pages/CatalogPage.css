@@ -1,0 +1,20 @@
+.catalog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.catalog-page__title {
+  margin: 0 0 1rem 0;
+}
+
+.catalog-page__layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .catalog-page__layout {
+    flex-direction: column;
+  }
+}

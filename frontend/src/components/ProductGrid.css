@@ -1,0 +1,17 @@
+.product-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.product-grid__message {
+  flex: 1;
+  text-align: center;
+  color: #777;
+  padding: 3rem 1rem;
+}
+
+.product-grid__message--error {
+  color: #b91c1c;
+}
