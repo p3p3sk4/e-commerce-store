@@ -12,6 +12,12 @@ import {
   addImage,
   deleteImage,
 } from '../controllers/admin/products.admin.controller.js';
+import {
+  listOrdersAdmin,
+  getOrderAdmin,
+  completeOrder,
+  cancelOrder,
+} from '../controllers/admin/orders.admin.controller.js';
 
 const router = Router();
 
@@ -31,5 +37,10 @@ router.delete('/variants/:variantId', deactivateVariant); // soft delete
 
 router.post('/products/:id/images', addImage);
 router.delete('/images/:imageId', deleteImage);
+
+router.get('/orders', listOrdersAdmin);
+router.get('/orders/:id', getOrderAdmin);
+router.put('/orders/:id/complete', completeOrder);
+router.put('/orders/:id/cancel', cancelOrder);
 
 export default router;

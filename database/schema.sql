@@ -14,8 +14,8 @@ CREATE TABLE users (
     password_hash   VARCHAR(255) NOT NULL,
     role            user_role    NOT NULL DEFAULT 'cliente',
     is_active       BOOLEAN      NOT NULL DEFAULT TRUE, -- "eliminar cuenta" = FALSE, nunca DELETE físico
-    deleted_at      TIMESTAMP,
-    created_at      TIMESTAMP    NOT NULL DEFAULT NOW(),
+    deleted_at      TIMESTAMPTZ,
+    created_at      TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
     CONSTRAINT email_or_phone_required CHECK (email IS NOT NULL OR phone IS NOT NULL)
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE user_addresses (
     state           VARCHAR(100) NOT NULL,
     zip_code        VARCHAR(10) NOT NULL,
     is_default      BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at      TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- ---------- CATEGORÍAS Y MARCAS (para los filtros) ----------
@@ -57,8 +57,8 @@ CREATE TABLE products (
     category_id     INTEGER REFERENCES categories(id),
     brand_id        INTEGER REFERENCES brands(id),
     is_active       BOOLEAN NOT NULL DEFAULT TRUE, -- para "quitar" un producto sin borrar su historial
-    created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at      TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX idx_products_name ON products USING GIN (to_tsvector('spanish', name)); -- búsqueda por nombre
@@ -91,7 +91,7 @@ CREATE TABLE cart_items (
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     variant_id      INTEGER NOT NULL REFERENCES product_variants(id) ON DELETE CASCADE,
     quantity        INTEGER NOT NULL CHECK (quantity > 0),
-    added_at        TIMESTAMP NOT NULL DEFAULT NOW(),
+    added_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (user_id, variant_id)
 );
 
@@ -112,7 +112,7 @@ CREATE TABLE orders (
     payment_proof_url   VARCHAR(500), -- captura/foto del comprobante subida por el cliente (transferencia); efectivo no aplica
     status              order_status NOT NULL,
     total               NUMERIC(10,2) NOT NULL DEFAULT 0, -- se calcula solo, vía trigger (ver abajo)
-    expires_at          TIMESTAMP, -- solo aplica a transferencia (creación + 10 min); NULL en efectivo
+    expires_at          TIMESTAMPTZ, -- solo aplica a transferencia (creación + 10 min); NULL en efectivo
     -- Copia congelada de la dirección al momento de la compra (nunca referencia user_addresses en vivo)
     shipping_recipient_name VARCHAR(150) NOT NULL,
     shipping_phone          VARCHAR(20) NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE orders (
     shipping_city           VARCHAR(100) NOT NULL,
     shipping_state          VARCHAR(100) NOT NULL,
     shipping_zip_code       VARCHAR(10) NOT NULL,
-    created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     -- Efectivo nunca tiene folio ni comprobante (no aplica); transferencia puede tenerlos NULL
     -- mientras el cliente aún no sube su comprobante.
     CONSTRAINT chk_cash_has_no_payment_proof CHECK (
@@ -149,7 +149,7 @@ CREATE TABLE inventory_movements (
     change_amount   INTEGER NOT NULL, -- negativo en venta, positivo en reabastecimiento/ajuste
     type            movement_type NOT NULL,
     order_id        INTEGER REFERENCES orders(id),
-    created_at      TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- ============================================================
