@@ -18,6 +18,7 @@ import {
   completeOrder,
   cancelOrder,
 } from '../controllers/admin/orders.admin.controller.js';
+import { listCustomers, exportCustomers } from '../controllers/admin/customers.admin.controller.js';
 
 const router = Router();
 
@@ -42,5 +43,8 @@ router.get('/orders', listOrdersAdmin);
 router.get('/orders/:id', getOrderAdmin);
 router.put('/orders/:id/complete', completeOrder);
 router.put('/orders/:id/cancel', cancelOrder);
+
+router.get('/customers', listCustomers);
+router.get('/customers/export', exportCustomers);
 
 export default router;
