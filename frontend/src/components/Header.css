@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  background: #fff;
+}
+
+.header__brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header__link {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.header__link--button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.header__link:hover {
+  text-decoration: underline;
+}
+
+.header__badge {
+  display: inline-block;
+  margin-left: 0.35rem;
+  background: #222;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 0.05rem 0.45rem;
+}
+
+.header__user {
+  font-size: 0.9rem;
+  color: #555;
+}

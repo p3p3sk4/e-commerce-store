@@ -76,11 +76,20 @@
   border-radius: 4px;
   padding: 0.1rem 0.4rem;
   color: #444;
+  background: #fff;
+  cursor: pointer;
+}
+
+.product-card__size.is-selected {
+  border-color: #222;
+  background: #222;
+  color: #fff;
 }
 
 .product-card__size.is-unavailable {
   color: #ccc;
   text-decoration: line-through;
+  cursor: not-allowed;
 }
 
 .product-card__footer {

@@ -1,0 +1,129 @@
+.order-status {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.order-status__message {
+  text-align: center;
+  color: #777;
+  padding: 3rem 1rem;
+}
+
+.order-status__badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  background: #eee;
+  color: #444;
+}
+
+.order-status__badge--completado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.order-status__badge--cancelado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.order-status__badge--pendiente_pago,
+.order-status__badge--apartado {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.order-status__section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.order-status__section h2 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.order-status__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.order-status__total {
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.order-status__countdown {
+  font-size: 0.95rem;
+}
+
+.order-status__countdown--expired {
+  color: #b45309;
+}
+
+.order-status__proof-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.order-status__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.order-status__input {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+}
+
+.order-status__submit {
+  align-self: flex-start;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+}
+
+.order-status__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.order-status__error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.order-status__proof-sent,
+.order-status__cash-note {
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.order-status__success {
+  color: #166534;
+  font-weight: 600;
+}
+
+.order-status__cancelled {
+  color: #991b1b;
+  font-weight: 600;
+}
