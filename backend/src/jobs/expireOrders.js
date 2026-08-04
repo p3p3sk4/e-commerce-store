@@ -9,7 +9,7 @@ export function startExpireOrdersJob() {
     try {
       const { rows } = await pool.query(
         `UPDATE orders SET status = 'cancelado'
-         WHERE status = 'pendiente_pago' AND expires_at < NOW()
+         WHERE status = 'pendiente_pago' AND expires_at < NOW() AND payment_proof_url IS NULL
          RETURNING id, order_number`
       );
       if (rows.length > 0) {

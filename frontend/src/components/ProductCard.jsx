@@ -1,3 +1,7 @@
+import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addToCart } from '../store/cartSlice.js';
 import './ProductCard.css';
 
 const PLACEHOLDER_IMAGE =
@@ -21,9 +25,46 @@ function totalAvailable(variants) {
 }
 
 export function ProductCard({ product }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
   const image = product.images && product.images.length > 0 ? product.images[0] : PLACEHOLDER_IMAGE;
-  const available = totalAvailable(product.variants);
+  const variants = product.variants || [];
+  const available = totalAvailable(variants);
   const inStock = available > 0;
+
+  const firstAvailableVariant = useMemo(
+    () => variants.find((variant) => variant.available_quantity > 0) || variants[0],
+    [variants]
+  );
+  const [selectedVariantId, setSelectedVariantId] = useState(firstAvailableVariant?.id);
+  const selectedVariant = variants.find((variant) => variant.id === selectedVariantId) || firstAvailableVariant;
+
+  const [adding, setAdding] = useState(false);
+
+  const ensureLoggedIn = () => {
+    if (!user) {
+      navigate('/login');
+      return false;
+    }
+    return true;
+  };
+
+  const handleAddToCart = async () => {
+    if (!ensureLoggedIn() || !selectedVariant) return;
+    setAdding(true);
+    await dispatch(addToCart({ variantId: selectedVariant.id, quantity: 1 }));
+    setAdding(false);
+  };
+
+  const handleBuyNow = async () => {
+    if (!ensureLoggedIn() || !selectedVariant) return;
+    setAdding(true);
+    await dispatch(addToCart({ variantId: selectedVariant.id, quantity: 1 }));
+    setAdding(false);
+    navigate('/checkout');
+  };
 
   return (
     <article className="product-card">
@@ -38,27 +79,49 @@ export function ProductCard({ product }) {
         {product.category && <span className="product-card__category">{product.category}</span>}
 
         <div className="product-card__sizes">
-          {(product.variants || []).map((variant) => (
-            <span
+          {variants.map((variant) => (
+            <button
               key={variant.id}
-              className={`product-card__size ${variant.available_quantity <= 0 ? 'is-unavailable' : ''}`}
+              type="button"
+              disabled={variant.available_quantity <= 0}
+              onClick={() => setSelectedVariantId(variant.id)}
+              className={`product-card__size ${variant.available_quantity <= 0 ? 'is-unavailable' : ''} ${
+                selectedVariant?.id === variant.id ? 'is-selected' : ''
+              }`}
             >
               {variant.size}
-            </span>
+            </button>
           ))}
         </div>
 
         <div className="product-card__footer">
-          <span className="product-card__price">{formatPriceRange(product.variants)}</span>
-          <span className="product-card__stock">{inStock ? `${available} disponibles` : 'Sin stock'}</span>
+          <span className="product-card__price">
+            {selectedVariant ? `$${Number(selectedVariant.price).toFixed(2)}` : formatPriceRange(variants)}
+          </span>
+          <span className="product-card__stock">
+            {selectedVariant
+              ? `${selectedVariant.available_quantity} disponibles`
+              : inStock
+                ? `${available} disponibles`
+                : 'Sin stock'}
+          </span>
         </div>
 
         <div className="product-card__actions">
-          {/* Se conectan a la canasta/checkout en el siguiente paso del frontend. */}
-          <button type="button" className="product-card__btn product-card__btn--secondary" disabled={!inStock}>
+          <button
+            type="button"
+            className="product-card__btn product-card__btn--secondary"
+            disabled={!inStock || adding}
+            onClick={handleAddToCart}
+          >
             Agregar a la canasta
           </button>
-          <button type="button" className="product-card__btn product-card__btn--primary" disabled={!inStock}>
+          <button
+            type="button"
+            className="product-card__btn product-card__btn--primary"
+            disabled={!inStock || adding}
+            onClick={handleBuyNow}
+          >
             Comprar
           </button>
         </div>
