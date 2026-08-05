@@ -37,6 +37,17 @@
   border-radius: 4px;
 }
 
+.product-card__photo-count {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
 .product-card__body {
   padding: 0.85rem 1rem 1rem;
   display: flex;

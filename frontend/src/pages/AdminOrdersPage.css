@@ -1,0 +1,65 @@
+.admin-orders__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.admin-orders__header select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+}
+
+.admin-orders__error {
+  color: #b91c1c;
+}
+
+.admin-orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-orders__table th {
+  text-align: left;
+  color: #777;
+  font-weight: 600;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.admin-orders__table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.admin-orders__badge {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #eee;
+  color: #444;
+}
+
+.admin-orders__badge--completado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.admin-orders__badge--cancelado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.admin-orders__badge--pendiente_pago,
+.admin-orders__badge--apartado {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.admin-orders__actions {
+  display: flex;
+  gap: 0.4rem;
+}

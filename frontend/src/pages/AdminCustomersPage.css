@@ -1,0 +1,30 @@
+.admin-customers__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.admin-customers__error {
+  color: #b91c1c;
+}
+
+.admin-customers__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-customers__table th {
+  text-align: left;
+  color: #777;
+  font-weight: 600;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.admin-customers__table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #f2f2f2;
+  vertical-align: top;
+}
