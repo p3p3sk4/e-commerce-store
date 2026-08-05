@@ -33,6 +33,11 @@ export function Header() {
             <Link to="/orders" className="header__link">
               Mis pedidos
             </Link>
+            {user.role === 'admin' && (
+              <Link to="/admin/products" className="header__link">
+                Admin
+              </Link>
+            )}
             <span className="header__user">Hola, {user.full_name}</span>
             <button type="button" className="header__link header__link--button" onClick={handleLogout}>
               Cerrar sesión

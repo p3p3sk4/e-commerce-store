@@ -38,6 +38,46 @@ export async function createBrand(req, res) {
   }
 }
 
+export async function updateCategory(req, res) {
+  const { id } = req.params;
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: 'name es obligatorio' });
+  try {
+    const { rows } = await pool.query(
+      `UPDATE categories SET name = $1 WHERE id = $2 RETURNING *`,
+      [name, id]
+    );
+    if (!rows[0]) return res.status(404).json({ error: 'Categoría no encontrada' });
+    res.json({ category: rows[0] });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(409).json({ error: 'Ya existe una categoría con ese nombre' });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Error al actualizar la categoría' });
+  }
+}
+
+export async function updateBrand(req, res) {
+  const { id } = req.params;
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: 'name es obligatorio' });
+  try {
+    const { rows } = await pool.query(
+      `UPDATE brands SET name = $1 WHERE id = $2 RETURNING *`,
+      [name, id]
+    );
+    if (!rows[0]) return res.status(404).json({ error: 'Marca no encontrada' });
+    res.json({ brand: rows[0] });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(409).json({ error: 'Ya existe una marca con ese nombre' });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Error al actualizar la marca' });
+  }
+}
+
 // ---------- PRODUCTOS ----------
 
 // Crea el producto junto con sus variantes iniciales (talla/color, precio, stock) en una sola transacción.
@@ -209,6 +249,41 @@ export async function addImage(req, res) {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Error al agregar la imagen' });
+  }
+}
+
+export async function listProductImages(req, res) {
+  const { id } = req.params;
+  try {
+    const { rows } = await pool.query(
+      `SELECT id, image_url, position FROM product_images WHERE product_id = $1 ORDER BY position, id`,
+      [id]
+    );
+    res.json({ images: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al listar las imágenes' });
+  }
+}
+
+export async function uploadProductImageFile(req, res) {
+  const { id } = req.params;
+  const { position = 0 } = req.body;
+
+  if (!req.file) {
+    return res.status(400).json({ error: 'Se requiere el archivo de la imagen (campo "image")' });
+  }
+
+  try {
+    const imageUrl = `/uploads/products/${req.file.filename}`;
+    const { rows } = await pool.query(
+      `INSERT INTO product_images (product_id, image_url, position) VALUES ($1, $2, $3) RETURNING *`,
+      [id, imageUrl, position]
+    );
+    res.status(201).json({ image: rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al subir la imagen' });
   }
 }
 

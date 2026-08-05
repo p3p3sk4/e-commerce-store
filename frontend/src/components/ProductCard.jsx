@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../store/cartSlice.js';
+import { resolveMediaUrl } from '../api/client.js';
+import { ImageViewer } from './ImageViewer.jsx';
 import './ProductCard.css';
 
 const PLACEHOLDER_IMAGE =
@@ -29,10 +31,13 @@ export function ProductCard({ product }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
 
-  const image = product.images && product.images.length > 0 ? product.images[0] : PLACEHOLDER_IMAGE;
+  const galleryImages = (product.images || []).map((url) => resolveMediaUrl(url));
+  const image = galleryImages.length > 0 ? galleryImages[0] : PLACEHOLDER_IMAGE;
   const variants = product.variants || [];
   const available = totalAvailable(variants);
   const inStock = available > 0;
+
+  const [viewerIndex, setViewerIndex] = useState(null);
 
   const firstAvailableVariant = useMemo(
     () => variants.find((variant) => variant.available_quantity > 0) || variants[0],
@@ -69,9 +74,29 @@ export function ProductCard({ product }) {
   return (
     <article className="product-card">
       <div className="product-card__image-wrap">
-        <img src={image} alt={product.name} className="product-card__image" loading="lazy" />
+        <img
+          src={image}
+          alt={product.name}
+          className="product-card__image"
+          loading="lazy"
+          onClick={() => galleryImages.length > 0 && setViewerIndex(0)}
+          style={galleryImages.length > 0 ? { cursor: 'zoom-in' } : undefined}
+        />
         {!inStock && <span className="product-card__badge">Agotado</span>}
+        {galleryImages.length > 1 && (
+          <span className="product-card__photo-count">📷 {galleryImages.length}</span>
+        )}
       </div>
+
+      {viewerIndex !== null && (
+        <ImageViewer
+          images={galleryImages}
+          index={viewerIndex}
+          alt={product.name}
+          onClose={() => setViewerIndex(null)}
+          onChangeIndex={setViewerIndex}
+        />
+      )}
 
       <div className="product-card__body">
         {product.brand && <span className="product-card__brand">{product.brand}</span>}

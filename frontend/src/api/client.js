@@ -1,6 +1,18 @@
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
 const TOKEN_STORAGE_KEY = 'tienda_token';
 
+// El backend a veces devuelve rutas relativas para archivos subidos
+// (ej. "/uploads/products/foto.jpg"). El navegador las resolvería contra el
+// origen del FRONTEND si se usan tal cual, así que hay que anteponerles el
+// origen real del backend antes de ponerlas en un <img src>.
+const API_ORIGIN = BASE_URL.replace(/\/api\/?$/, '');
+
+export function resolveMediaUrl(path) {
+  if (!path) return path;
+  if (/^https?:\/\//i.test(path)) return path; // ya es una URL completa
+  return `${API_ORIGIN}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+
 function buildQuery(params = {}) {
   const search = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
