@@ -6,7 +6,7 @@
 .admin-layout__sidebar {
   width: 200px;
   flex-shrink: 0;
-  border-right: 1px solid #eaeaea;
+  border-right: 1px solid var(--color-border);
   padding: 1.5rem 1rem;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .admin-layout__link.active {
-  background: #222;
+  background: var(--color-primary);
   color: #fff;
 }
 

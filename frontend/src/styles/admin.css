@@ -12,13 +12,13 @@
 }
 
 .admin-btn--primary {
-  background: #222;
+  background: var(--color-primary);
   color: #fff;
-  border-color: #222;
+  border-color: var(--color-primary);
 }
 
 .admin-btn--primary:hover {
-  background: #000;
+  background: var(--color-primary-dark);
 }
 
 .admin-btn--danger {
@@ -40,7 +40,7 @@
 .admin-form-grid input,
 .admin-form-grid select {
   padding: 0.5rem 0.65rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   width: 100%;
 }
@@ -53,6 +53,6 @@
 .admin-inline-add select,
 .admin-inline-add input {
   padding: 0.5rem 0.6rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
 }

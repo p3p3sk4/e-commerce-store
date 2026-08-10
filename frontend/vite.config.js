@@ -12,13 +12,13 @@ export default defineConfig({
       // cada vez — en producción esto no cambia nada, el SW real se genera igual.
       devOptions: { enabled: true },
       manifest: {
-        name: 'Tienda',
-        short_name: 'Tienda',
-        description: 'Ropa, bolsas y accesorios',
+        name: 'Hannkat & Xio',
+        short_name: 'Hannkat & Xio',
+        description: 'Bolsas, ropa y artículos varios de distintas marcas',
         start_url: '/',
         display: 'standalone',
-        background_color: '#fafafa',
-        theme_color: '#1a1a1a',
+        background_color: '#faf7f4',
+        theme_color: '#c39790',
         icons: [
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },

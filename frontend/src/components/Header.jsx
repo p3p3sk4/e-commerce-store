@@ -19,8 +19,10 @@ export function Header() {
 
   return (
     <header className="header">
-      <Link to="/" className="header__brand">
-        Tienda
+      <Link to="/" className="header__brand" aria-label="Hannkat & Xio">
+        <span className="header__brand-top">Hannkat</span>
+        <span className="header__brand-dot" aria-hidden="true" />
+        <span className="header__brand-bottom">Xio</span>
       </Link>
 
       <nav className="header__nav">
