@@ -2,8 +2,10 @@ import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../store/cartSlice.js';
+import { toggleFavorite } from '../store/favoritesSlice.js';
 import { resolveMediaUrl } from '../api/client.js';
 import { ImageViewer } from './ImageViewer.jsx';
+import { HeartIcon } from './icons.jsx';
 import './ProductCard.css';
 
 const PLACEHOLDER_IMAGE =
@@ -30,6 +32,7 @@ export function ProductCard({ product }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const isFavorite = useSelector((state) => state.favorites.productIds.includes(product.id));
 
   const galleryImages = (product.images || []).map((url) => resolveMediaUrl(url));
   const image = galleryImages.length > 0 ? galleryImages[0] : PLACEHOLDER_IMAGE;
@@ -71,6 +74,12 @@ export function ProductCard({ product }) {
     navigate('/checkout');
   };
 
+  const handleToggleFavorite = (event) => {
+    event.stopPropagation();
+    if (!ensureLoggedIn()) return;
+    dispatch(toggleFavorite({ productId: product.id, isFavorite }));
+  };
+
   return (
     <article className="product-card">
       <div className="product-card__image-wrap">
@@ -86,6 +95,14 @@ export function ProductCard({ product }) {
         {galleryImages.length > 1 && (
           <span className="product-card__photo-count">📷 {galleryImages.length}</span>
         )}
+        <button
+          type="button"
+          className={`product-card__favorite ${isFavorite ? 'is-active' : ''}`}
+          onClick={handleToggleFavorite}
+          aria-label={isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+        >
+          <HeartIcon filled={isFavorite} />
+        </button>
       </div>
 
       {viewerIndex !== null && (

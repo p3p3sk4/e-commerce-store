@@ -34,6 +34,7 @@ const catalogSlice = createSlice({
     filters: initialFilters,
     status: 'idle', // idle | loading | succeeded | failed
     error: null,
+    isSearchOpen: false,
   },
   reducers: {
     setFilter(state, action) {
@@ -46,6 +47,12 @@ const catalogSlice = createSlice({
     },
     resetFilters(state) {
       state.filters = initialFilters;
+    },
+    openSearch(state) {
+      state.isSearchOpen = true;
+    },
+    closeSearch(state) {
+      state.isSearchOpen = false;
     },
   },
   extraReducers: (builder) => {
@@ -69,5 +76,5 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { setFilter, resetFilters } = catalogSlice.actions;
+export const { setFilter, resetFilters, openSearch, closeSearch } = catalogSlice.actions;
 export default catalogSlice.reducer;

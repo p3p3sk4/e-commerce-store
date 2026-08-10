@@ -1,12 +1,22 @@
 .header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
+}
+
+.header__side {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.header__side--right {
+  justify-content: flex-end;
 }
 
 .header__brand {
@@ -16,12 +26,13 @@
   gap: 0.15rem;
   text-decoration: none;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .header__brand-top {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--color-text);
 }
@@ -34,62 +45,166 @@
 }
 
 .header__brand-bottom {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 400;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
 @media (min-width: 640px) {
   .header__brand-top {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
-.header__nav {
+.header__icon-btn {
+  position: relative;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem 1rem;
-}
-
-@media (min-width: 640px) {
-  .header__nav {
-    gap: 1.25rem;
-  }
-}
-
-.header__link {
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: none;
   color: var(--color-text);
+  cursor: pointer;
   text-decoration: none;
-  font-size: 0.9rem;
+}
+
+.header__icon-btn:hover {
+  background: var(--color-bg);
+}
+
+.header__icon-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.header__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.header__menu-anchor {
   position: relative;
 }
 
-.header__link--button {
-  background: none;
+.header__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 100;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El menú de notificaciones vive del lado izquierdo, así que su dropdown
+   se alinea a la izquierda en vez de a la derecha. */
+.header__side--left .header__dropdown {
+  right: auto;
+  left: 0;
+  width: min(90vw, 320px);
+}
+
+.header__dropdown a,
+.header__dropdown button {
+  padding: 0.5rem 0.5rem;
+  border-radius: 6px;
   border: none;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 0;
-}
-
-.header__link:hover {
-  text-decoration: underline;
-}
-
-.header__badge {
-  display: inline-block;
-  margin-left: 0.35rem;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  padding: 0.05rem 0.45rem;
-}
-
-.header__user {
+  background: none;
+  text-align: left;
   font-size: 0.9rem;
+  color: var(--color-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header__dropdown a:hover,
+.header__dropdown button:hover {
+  background: var(--color-bg);
+}
+
+.header__dropdown-greeting {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
   color: var(--color-text-muted);
+}
+
+.header__dropdown-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem 0.5rem;
+  gap: 0.5rem;
+}
+
+.header__dropdown-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.header__dropdown-action {
+  font-size: 0.75rem !important;
+  color: var(--color-primary-dark) !important;
+  padding: 0 !important;
+  white-space: nowrap;
+}
+
+.header__dropdown-empty {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.header__notif-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.header__notif-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+
+.header__notif-item.is-unread {
+  background: var(--color-bg);
+  font-weight: 600;
+}
+
+.header__notif-time {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
 }

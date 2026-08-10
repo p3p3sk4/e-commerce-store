@@ -9,6 +9,8 @@ import adminRoutes from './routes/admin.routes.js';
 import cartRoutes from './routes/cart.routes.js';
 import orderRoutes from './routes/order.routes.js';
 import addressRoutes from './routes/address.routes.js';
+import favoritesRoutes from './routes/favorites.routes.js';
+import notificationsRoutes from './routes/notifications.routes.js';
 import { startExpireOrdersJob } from './jobs/expireOrders.js';
 
 dotenv.config();
@@ -27,6 +29,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/addresses', addressRoutes);
+app.use('/api/favorites', favoritesRoutes);
+app.use('/api/notifications', notificationsRoutes);
 
 // Endpoint de salud: confirma que el backend y la base de datos están conectados.
 app.get('/health', async (req, res) => {

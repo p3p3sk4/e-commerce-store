@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadFilterOptions, loadProducts } from '../store/catalogSlice.js';
+import { closeSearch, loadFilterOptions, loadProducts } from '../store/catalogSlice.js';
 import { SearchBar } from '../components/SearchBar.jsx';
 import { FilterSidebar } from '../components/FilterSidebar.jsx';
 import { ProductGrid } from '../components/ProductGrid.jsx';
@@ -11,6 +11,7 @@ const FILTER_KEYS = ['category', 'brand', 'size', 'minPrice', 'maxPrice'];
 export function CatalogPage() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.catalog.filters);
+  const isSearchOpen = useSelector((state) => state.catalog.isSearchOpen);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Categorías y marcas para el sidebar solo se necesitan una vez.
@@ -35,7 +36,19 @@ export function CatalogPage() {
       <h1 className="catalog-page__title">Catálogo</h1>
 
       <div className="catalog-page__toolbar">
-        <SearchBar />
+        {isSearchOpen && (
+          <div className="catalog-page__search-row">
+            <SearchBar autoFocus />
+            <button
+              type="button"
+              className="catalog-page__search-close"
+              aria-label="Cerrar búsqueda"
+              onClick={() => dispatch(closeSearch())}
+            >
+              ×
+            </button>
+          </div>
+        )}
         <button
           type="button"
           className="catalog-page__filter-btn"

@@ -41,7 +41,15 @@ export async function completeOrder(req, res) {
       [req.params.id]
     );
     if (!rows[0]) return res.status(404).json({ error: 'Orden no encontrada' });
-    res.json({ order: rows[0] });
+    const order = rows[0];
+
+    // Avisa al cliente que su orden ya se completó.
+    await pool.query(
+      `INSERT INTO notifications (user_id, order_id, message) VALUES ($1, $2, $3)`,
+      [order.user_id, order.id, `¡Tu orden ${order.order_number} fue completada! Gracias por tu compra.`]
+    );
+
+    res.json({ order });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -55,7 +63,15 @@ export async function cancelOrder(req, res) {
       [req.params.id]
     );
     if (!rows[0]) return res.status(404).json({ error: 'Orden no encontrada' });
-    res.json({ order: rows[0] });
+    const order = rows[0];
+
+    // Avisa al cliente que su orden fue cancelada.
+    await pool.query(
+      `INSERT INTO notifications (user_id, order_id, message) VALUES ($1, $2, $3)`,
+      [order.user_id, order.id, `Tu orden ${order.order_number} fue cancelada.`]
+    );
+
+    res.json({ order });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

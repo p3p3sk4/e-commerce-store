@@ -4,7 +4,7 @@ import { setFilter } from '../store/catalogSlice.js';
 import { useDebouncedValue } from '../hooks/useDebouncedValue.js';
 import './SearchBar.css';
 
-export function SearchBar() {
+export function SearchBar({ autoFocus = false }) {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.catalog.filters.search);
   const [value, setValue] = useState(search);
@@ -27,6 +27,7 @@ export function SearchBar() {
         value={value}
         onChange={(event) => setValue(event.target.value)}
         aria-label="Buscar productos"
+        autoFocus={autoFocus}
       />
     </div>
   );

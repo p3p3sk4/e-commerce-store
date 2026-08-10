@@ -3,6 +3,8 @@ import catalogReducer from './catalogSlice.js';
 import authReducer from './authSlice.js';
 import cartReducer from './cartSlice.js';
 import ordersReducer from './ordersSlice.js';
+import favoritesReducer from './favoritesSlice.js';
+import notificationsReducer from './notificationsSlice.js';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     cart: cartReducer,
     orders: ordersReducer,
+    favorites: favoritesReducer,
+    notifications: notificationsReducer,
   },
 });
