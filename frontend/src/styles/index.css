@@ -1,3 +1,24 @@
+:root {
+  /* Paleta "pastel moderno" de Hannkat & Xio — apagada, no saturada */
+  --color-bg: #faf7f4;
+  --color-surface: #ffffff;
+  --color-border: #e8e0da;
+  --color-text: #3b3733;
+  --color-text-muted: #8a8178;
+
+  --color-primary: #c39790; /* rosa empolvado apagado — botones y acentos principales */
+  --color-primary-dark: #a97d76; /* hover del primario */
+  --color-primary-contrast: #ffffff;
+
+  --color-secondary: #a3ac98; /* salvia apagado — acentos secundarios, chips */
+  --color-secondary-dark: #8b9481;
+
+  --color-danger: #b9695f;
+  --color-danger-bg: #f7ebe9;
+  --color-success: #6f8a63;
+  --color-success-bg: #eef2e9;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,8 +26,8 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  color: #1a1a1a;
-  background: #fafafa;
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 button,

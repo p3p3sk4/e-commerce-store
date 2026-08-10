@@ -10,7 +10,7 @@
 }
 
 .admin-products__create-form {
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -30,7 +30,7 @@
 
 .admin-variant-row input {
   padding: 0.45rem 0.6rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .admin-product-row {
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1rem;
 }
@@ -89,7 +89,7 @@
   font-weight: 600;
   color: #777;
   padding: 0.3rem 0.4rem;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .admin-variant-table td {
@@ -100,7 +100,7 @@
 .admin-variant-table input {
   width: 90px;
   padding: 0.3rem 0.4rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
 }
 
@@ -143,7 +143,7 @@
   height: 64px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--color-border);
   cursor: zoom-in;
 }
 
@@ -170,6 +170,6 @@
 .admin-product-row__image-option input:not([type='file']) {
   flex: 1;
   padding: 0.4rem 0.6rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
 }

@@ -26,7 +26,7 @@
 
 .auth-form__input {
   padding: 0.6rem 0.75rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 1rem;
 }
@@ -35,7 +35,7 @@
   padding: 0.7rem;
   border: none;
   border-radius: 6px;
-  background: #222;
+  background: var(--color-primary);
   color: #fff;
   font-size: 0.95rem;
   cursor: pointer;

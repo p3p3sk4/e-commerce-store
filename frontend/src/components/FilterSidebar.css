@@ -1,7 +1,5 @@
 .filter-sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  padding-right: 1.5rem;
+  width: 100%;
 }
 
 .filter-sidebar__header {
@@ -67,7 +65,7 @@
 }
 
 .filter-sidebar__option.is-active {
-  background: #222;
+  background: var(--color-primary);
   color: #fff;
 }
 
@@ -81,18 +79,10 @@
   width: 100%;
   min-width: 0;
   padding: 0.4rem 0.5rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
 }
 
 .filter-sidebar__price-sep {
-  color: #888;
-}
-
-@media (max-width: 768px) {
-  .filter-sidebar {
-    width: 100%;
-    padding-right: 0;
-    margin-bottom: 1.5rem;
-  }
+  color: var(--color-text-muted);
 }
