@@ -1,4 +1,6 @@
 import { pool } from '../../db.js';
+import cloudinary from '../../config/cloudinary.js';
+import streamifier from 'streamifier';
 
 // ---------- CATEGORÍAS Y MARCAS ----------
 
@@ -266,6 +268,22 @@ export async function listProductImages(req, res) {
   }
 }
 
+// Sube el archivo a Cloudinary (nube) y guarda la URL permanente que devuelve
+// — así la imagen no depende del disco del servidor, que se borra en cada
+// despliegue del backend.
+function uploadBufferToCloudinary(buffer) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'hannkat-xio/products' },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+}
+
 export async function uploadProductImageFile(req, res) {
   const { id } = req.params;
   const { position = 0 } = req.body;
@@ -275,10 +293,10 @@ export async function uploadProductImageFile(req, res) {
   }
 
   try {
-    const imageUrl = `/uploads/products/${req.file.filename}`;
+    const result = await uploadBufferToCloudinary(req.file.buffer);
     const { rows } = await pool.query(
       `INSERT INTO product_images (product_id, image_url, position) VALUES ($1, $2, $3) RETURNING *`,
-      [id, imageUrl, position]
+      [id, result.secure_url, position]
     );
     res.status(201).json({ image: rows[0] });
   } catch (err) {
