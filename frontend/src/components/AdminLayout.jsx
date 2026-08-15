@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import './AdminLayout.css';
 
 export function AdminLayout() {
@@ -17,6 +17,12 @@ export function AdminLayout() {
             Clientes
           </NavLink>
         </nav>
+
+        <div className="admin-layout__divider" />
+
+        <Link to="/" className="admin-layout__back-link">
+          ← Volver a la tienda
+        </Link>
       </aside>
       <main className="admin-layout__content">
         <Outlet />
